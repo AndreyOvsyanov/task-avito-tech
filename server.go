@@ -285,7 +285,7 @@ func userAddRemove(user_id string, added_segments []string, remove_segments []st
 }
 
 func main() {
-	db, error_db = sql.Open("mysql", "root:G12e70891@tcp(db:3307)/my_database")
+	db, error_db = sql.Open("mysql", "root:G12e70891@tcp(localhost:3307)/my_database")
 	if error_db != nil {
 		log.Fatal(error_db)
 	}
