@@ -154,13 +154,17 @@ func getSegmentInfo(w http.ResponseWriter, r *http.Request) {
 }
 
 func getUserHistory(w http.ResponseWriter, r *http.Request) {
-	user_id := r.URL.Query().Get("user_id")
+	params := r.URL.Query()
+	user_id := params.Get("user_id")
+	year := params.Get("year")
+	month := params.Get("month")
 
 	// Создаем слайс данных, которые нужно записать в CSV-файл
 	query := `SELECT h.user_id, s.slug, h.type_of_operation, h.date_of_operation FROM segment s
-   			  JOIN history_operation h ON s.id = h.segment_id WHERE h.user_id = ?`
+   			  JOIN history_operation h ON s.id = h.segment_id 
+              WHERE h.user_id = ? AND YEAR(h.date_of_operation) = ? AND MONTH(h.date_of_operation) = ?`
 
-	history, err := db.Query(query, user_id)
+	history, err := db.Query(query, user_id, year, month)
 
 	defer func(result *sql.Rows) { _ = result.Close() }(history)
 

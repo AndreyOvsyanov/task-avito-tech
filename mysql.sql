@@ -1,30 +1,34 @@
 CREATE TABLE user (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    fio VARCHAR(255),
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    id int primary key auto_increment,
+    fio varchar(255),
+    created_at datetime default current_timestamp,
+    updated_at datetime default current_timestamp
 );
 
 CREATE TABLE segment (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    slug VARCHAR(255) UNIQUE
+    id int primary key auto_increment,
+    slug varchar(255) unique
 );
 
 CREATE TABLE user_segments (
-    user_id INT,
-    segment_id INT,
-    PRIMARY KEY (user_id, segment_id)
+    user_id int,
+    segment_id int,
+    primary key (user_id, segment_id),
+    foreign key (user_id) references user(id),
+    foreign key (segment_id) references segment(id)
 );
 
 CREATE TABLE history_operation (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT,
-    segment_id INT,
-    type_of_operation VARCHAR(50),
-    date_of_operation DATETIME DEFAULT CURRENT_TIMESTAMP
+    id int primary key auto_increment,
+    user_id int,
+    segment_id int,
+    type_of_operation varchar(50),
+    date_of_operation datetime default current_timestamp,
+    foreign key (user_id) references user(id),
+    foreign key (segment_id) references segment(id)
 );
 
 INSERT INTO user(fio) VALUES
-("Овсянов Андрей Борисович"),
-("Дмитриев Дмитрий Дмитриевич"),
-("Андреев Андрей Андреевич");
+('Овсянов Андрей Борисович'),
+('Дмитриев Дмитрий Дмитриевич'),
+('Андреев Андрей Андреевич');
